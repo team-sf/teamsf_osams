@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 class User extends Database
 {	
 	private $username;
@@ -70,22 +71,33 @@ class User extends Database
 	public function login($username, $password)
 	{
 		
-		$query = "SELECT * from user_tbl WHERE user_name= '".$username."'";
+		$query = "SELECT * from user_tbl WHERE user_email= '".$username."'";
 		if ($result = $this->connect()->query($query)) {
 
 		    while($row = $result->fetch_array(MYSQLI_ASSOC)) {
 		            $this->myArray[] = $row;
 		    }
-		    echo json_encode($this->myArray);
+		    json_encode($this->myArray);
 		}
 
 		$verify = password_verify($password, $this->myArray[0]['user_password']);
 		if ($verify) {
 		   	# code...
-			echo '<br> Password is valid!';
+			echo 1;
+
+			if($this->myArray[0]['accnt_type']=="seller")
+			{
+				header("Location: /teamsf_osams/backend/index.php");
+				$_SESSION['username'] = $this->myArray[0]['user_email'];
+			}
+			else
+			{
+				header("Location: /teamsf_osams/frontend/index.php");
+				$_SESSION['username'] = $this->myArray[0]['user_email'];
+			}
 		} else {
 			# code...
-		    echo '<br> Invalid password.';
+		    echo "INVALID!";
 		}
 	}
 	public function logout()
