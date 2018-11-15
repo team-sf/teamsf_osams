@@ -34,7 +34,7 @@ if(!empty($_POST["country_id"])){
     if($rowCount > 0){
         echo '<option value="">Select City/Municipality</option>';
         while($row = $query->fetch_assoc()){ 
-            echo '<option value="'.$row['citymunCode'].'">'.$row['citymunDesc'].'</option>';
+            echo '<option value="'.$row['citymunDesc'].'">'.$row['citymunDesc'].'</option>';
         }
     }else{
         echo '<option value="">City/Municipality not available</option>';
