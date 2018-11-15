@@ -13,10 +13,11 @@ if(isset($_POST['submit']))
 	$product_price = $_POST['product_price'];
 	$product_description = $_POST['product_description'];
 	$product_onhand = $_POST['product_onhand'];
+	$town_id = $_POST['town_id'];
 	$photo = $upload->uploadfile($_FILES['file']);
 
-	$column = array("prod_name", "prod_desc", "prod_price", "prod_onhand", "image");
-	$value = array($product_name, $product_description, $prod_price, $product_onhand, $photo);
+	$column = array("prod_name", "prod_desc", "prod_price", "prod_onhand", "image", "town_id");
+	$value = array($product_name, $product_description, $prod_price, $product_onhand, $photo, $town_id);
 
 	$product->create('product_tbl', $column, $value);
 	header("Location: /teamsf_osams/backend/add-product.php");

@@ -1,8 +1,10 @@
 <?php
+@session_start();
 include 'classes/DatabaseHelper.php';
 include 'classes/Osams.php';
 
 $osams = new Osams();
+$custid = $_SESSION['cust_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +56,7 @@ $osams = new Osams();
     <!-- Template Customizer-->
     <div class="customizer-backdrop"></div>
     <div class="customizer">
-      <div class="customizer-toggle"><i class="icon-cog"></i></div>
+      
       <div class="customizer-body">
         <div class="btn-group mb-4">
           <button class="btn btn-white btn-rounded btn-block dropdown-toggle my-0" type="button" data-toggle="dropdown">Choose Template</button>
@@ -327,25 +329,7 @@ $osams = new Osams();
       </nav>
     </div>
     <!-- Topbar-->
-    <div class="topbar">
-      <div class="topbar-column"><a class="hidden-md-down" href="mailto:support@unishop.com"><i class="icon-mail"></i>&nbsp; support@unishop.com</a><a class="hidden-md-down" href="tel:00331697720"><i class="icon-bell"></i>&nbsp; 00 33 169 7720</a><a class="social-button sb-facebook shape-none sb-dark" href="#" target="_blank"><i class="socicon-facebook"></i></a><a class="social-button sb-twitter shape-none sb-dark" href="#" target="_blank"><i class="socicon-twitter"></i></a><a class="social-button sb-instagram shape-none sb-dark" href="#" target="_blank"><i class="socicon-instagram"></i></a><a class="social-button sb-pinterest shape-none sb-dark" href="#" target="_blank"><i class="socicon-pinterest"></i></a>
-      </div>
-      <div class="topbar-column"><a class="hidden-md-down" href="#"><i class="icon-download"></i>&nbsp; Get mobile app</a>
-        <div class="lang-currency-switcher-wrap">
-          <div class="lang-currency-switcher dropdown-toggle"><span class="language"><img alt="English" src="img/flags/GB.png"></span><span class="currency">$ USD</span></div>
-          <div class="dropdown-menu">
-            <div class="currency-select">
-              <select class="form-control form-control-rounded form-control-sm">
-                <option value="usd">$ USD</option>
-                <option value="usd">€ EUR</option>
-                <option value="usd">£ UKP</option>
-                <option value="usd">¥ JPY</option>
-              </select>
-            </div><a class="dropdown-item" href="#"><img src="img/flags/FR.png" alt="Français">Français</a><a class="dropdown-item" href="#"><img src="img/flags/DE.png" alt="Deutsch">Deutsch</a><a class="dropdown-item" href="#"><img src="img/flags/IT.png" alt="Italiano">Italiano</a>
-          </div>
-        </div>
-      </div>
-    </div>
+   
     <!-- Navbar-->
     <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
     <header class="navbar navbar-sticky">
@@ -374,7 +358,6 @@ $osams = new Osams();
         <div class="row">
           <!-- Checkout Adress-->
           <div class="col-xl-9 col-lg-8">
-            <div class="checkout-steps"><a href="checkout-review.html">4. Review</a><a class="active" href="checkout-payment.php"><span class="angle"></span>3. Payment</a><a class="completed" href="checkout-shipping.html"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>2. Shipping</a><a class="completed" href="checkout-address.html"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>1. Address</a></div>
             <h4>Choose Payment Method</h4>
             <hr class="padding-bottom-1x">
             <div class="row">
@@ -412,7 +395,7 @@ $osams = new Osams();
                     <h3 class="widget-title">Payment Breakdown</h3>
                     <table class="table">
                         <?php
-                        $sqlStatement = "SELECT SUM(cart_total) AS 'Total', SUM(cart_total) * .12 AS 'Tax', SUM(cart_total) - SUM(cart_total) * .12 AS 'Subtotal' FROM cart_tbl JOIN customer_tbl ON cust_id = cart_cust_id JOIN product_tbl ON product_tbl.id = cart_prod_id WHERE cart_ispaid = 0";
+                        $sqlStatement = "SELECT SUM(cart_total) AS 'Total', SUM(cart_total) * .12 AS 'Tax', SUM(cart_total) - SUM(cart_total) * .12 AS 'Subtotal' FROM cart_tbl JOIN product_tbl ON product_tbl.id = cart_prod_id WHERE cart_ispaid = 0 AND cart_cust_id = '$custid'";
                         if($osams->select($sqlStatement) != 0) {
                             foreach ($osams->select($sqlStatement) as $value) {
                                 ?>

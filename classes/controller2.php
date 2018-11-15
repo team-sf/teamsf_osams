@@ -1,9 +1,31 @@
 <?php
-
-
-class Controller extends Database
+class Controller2 extends Database
 {
-	public function create($table, $columns, $values)
+	public function sqlquery($query)
+	{
+		return $this->connect()->query($query);
+	}
+
+	public function sqlquery2($query)
+	{
+		echo $query;
+		$result = $this->connect()->query($query);
+
+		if($result->num_rows > 0)
+		{
+			while($fetch = $result->fetch_assoc())
+			{
+				$res[] = $fetch;
+			}
+			return $res;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+		public function create($table, $columns, $values)
 	{		
 		$query = "INSERT INTO ".$table." (";
 		$ctr1 = count($columns);
@@ -38,7 +60,7 @@ class Controller extends Database
 		$query = "SELECT ";
 		$ctr1 = count($columns);
 
-		if($condition == "0")
+		if($condition == 0)
 		{
 			for($i=0; $i<=$ctr1-1; $i++)
 			{
@@ -98,8 +120,11 @@ class Controller extends Database
 			{
 				$query .= $columns[$i]." = "."'".$values[$i]."'".' WHERE id= '.$id;
 			}
-		}	
+			
+		}
+
 		return $this->connect()->query($query);
+		
 	}
 
 	public function delete($table, $id)
@@ -107,5 +132,5 @@ class Controller extends Database
 		$query = "DELETE FROM ".$table." WHERE id = ".$id;
 		return $this->connect()->query($query);
 	}
-
 }
+?>

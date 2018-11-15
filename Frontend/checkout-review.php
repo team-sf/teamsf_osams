@@ -2,7 +2,8 @@
 include 'classes/DatabaseHelper.php';
 include 'classes/Osams.php';
 $osams = new Osams();
-
+session_start();
+$custid = $_SESSION['cust_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +57,7 @@ $osams = new Osams();
       <div class="customizer-body">
         <div class="btn-group mb-4">
           <button class="btn btn-white btn-rounded btn-block dropdown-toggle my-0" type="button" data-toggle="dropdown">Choose Template</button>
-          <div class="dropdown-menu"><a class="dropdown-item" href="index.html">Template 1 (Clothing)</a><a class="dropdown-item" href="http://themes.rokaux.com/unishop/v3.0/template-2/index.html">Template 2 (Furniture)</a><a class="dropdown-item" href="http://themes.rokaux.com/unishop/v3.0/template-3/index.html">Template 3 (Electronics)</a></div>
+          <div class="dropdown-menu"><a class="dropdown-item" href="index.php">Template 1 (Clothing)</a><a class="dropdown-item" href="http://themes.rokaux.com/unishop/v3.0/template-2/index.php">Template 2 (Furniture)</a><a class="dropdown-item" href="http://themes.rokaux.com/unishop/v3.0/template-3/index.php">Template 3 (Electronics)</a></div>
         </div>
         <div class="customizer-title">Choose color</div>
         <div class="customizer-color-switch"><a class="active" href="#" data-color="default" style="background-color: #0da9ef;"></a><a href="#" data-color="2ecc71" style="background-color: #2ecc71;"></a><a href="#" data-color="f39c12" style="background-color: #f39c12;"></a><a href="#" data-color="e74c3c" style="background-color: #e74c3c;"></a></div>
@@ -158,7 +159,7 @@ $osams = new Osams();
         </div></a>
       <nav class="offcanvas-menu">
         <ul class="menu">
-          <li class="has-children"><span><a href="index.html"><span>Home</span></a><span class="sub-menu-toggle"></span></span>
+          <li class="has-children"><span><a href="index.php"><span>Home</span></a><span class="sub-menu-toggle"></span></span>
             <ul class="offcanvas-submenu">
                 <li><a href="index.html">Featured Products Slider</a></li>
                 <li><a href="home-featured-categories.html">Featured Categories</a></li>
@@ -247,7 +248,7 @@ $osams = new Osams();
           </li>
           <li class="has-children"><span><a href="account-orders.html"><span>Account</span></a><span class="sub-menu-toggle"></span></span>
             <ul class="offcanvas-submenu">
-                <li><a href="account-login.html">Login / Register</a></li>
+                <li><a href="account-login.php">Login / Register</a></li>
                 <li><a href="account-password-recovery.html">Password Recovery</a></li>
                 <li><a href="account-orders.html">Orders List</a></li>
                 <li><a href="account-wishlist.html">Wishlist</a></li>
@@ -324,26 +325,7 @@ $osams = new Osams();
         </ul>
       </nav>
     </div>
-    <!-- Topbar-->
-    <div class="topbar">
-      <div class="topbar-column"><a class="hidden-md-down" href="mailto:support@unishop.com"><i class="icon-mail"></i>&nbsp; support@unishop.com</a><a class="hidden-md-down" href="tel:00331697720"><i class="icon-bell"></i>&nbsp; 00 33 169 7720</a><a class="social-button sb-facebook shape-none sb-dark" href="#" target="_blank"><i class="socicon-facebook"></i></a><a class="social-button sb-twitter shape-none sb-dark" href="#" target="_blank"><i class="socicon-twitter"></i></a><a class="social-button sb-instagram shape-none sb-dark" href="#" target="_blank"><i class="socicon-instagram"></i></a><a class="social-button sb-pinterest shape-none sb-dark" href="#" target="_blank"><i class="socicon-pinterest"></i></a>
-      </div>
-      <div class="topbar-column"><a class="hidden-md-down" href="#"><i class="icon-download"></i>&nbsp; Get mobile app</a>
-        <div class="lang-currency-switcher-wrap">
-          <div class="lang-currency-switcher dropdown-toggle"><span class="language"><img alt="English" src="img/flags/GB.png"></span><span class="currency">$ USD</span></div>
-          <div class="dropdown-menu">
-            <div class="currency-select">
-              <select class="form-control form-control-rounded form-control-sm">
-                <option value="usd">$ USD</option>
-                <option value="usd">€ EUR</option>
-                <option value="usd">£ UKP</option>
-                <option value="usd">¥ JPY</option>
-              </select>
-            </div><a class="dropdown-item" href="#"><img src="img/flags/FR.png" alt="Français">Français</a><a class="dropdown-item" href="#"><img src="img/flags/DE.png" alt="Deutsch">Deutsch</a><a class="dropdown-item" href="#"><img src="img/flags/IT.png" alt="Italiano">Italiano</a>
-          </div>
-        </div>
-      </div>
-    </div>
+  
     <!-- Navbar-->
     <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
     <header class="navbar navbar-sticky">
@@ -372,7 +354,7 @@ $osams = new Osams();
         <div class="row">
           <!-- Checkout Adress-->
           <div class="col-xl-9 col-lg-8">
-            <div class="checkout-steps"><a class="active" href="checkout-review.php">4. Summary</a><a class="completed" href="checkout-payment.html"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>3. Payment</a><a class="completed" href="checkout-shipping.html"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>2. Shipping</a><a class="completed" href="checkout-address.html"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>1. Address</a></div>
+            <div class="checkout-steps"><a class="active" href="checkout-review.php">4. Summary</a><a class="completed" href="checkout-payment.php"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>3. Payment</a><a class="completed" href="checkout-shipping.php"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>2. Shipping</a><a class="completed" href="checkout-address.php"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>1. Address</a></div>
             <h4>Review Your Order</h4>
             <hr class="padding-bottom-1x">
             <div class="table-responsive shopping-cart">
@@ -382,16 +364,16 @@ $osams = new Osams();
                     <th>Product Name</th>
                     <th class="text-center">Quantity</th>
                     <th class="text-right">Total</th>
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <?php
-                            $sqlStatement = "SELECT * FROM cart_tbl JOIN customer_tbl ON cust_id = cart_cust_id JOIN product_tbl ON product_tbl.id = cart_prod_id WHERE cart_ispaid = 0";
+                  <?php
+                            $sqlStatement = "SELECT * FROM cart_tbl JOIN customer_tbl ON cust_id = cart_cust_id JOIN product_tbl ON product_tbl.id = cart_prod_id WHERE cart_ispaid = 0 AND cart_cust_id = '$custid'";
                             if($osams->select($sqlStatement) != 0) {
                                 foreach ($osams->select($sqlStatement) as $value) {
                                     ?>
+                    <tr>
+                        
                                     <td>
                                         <div class="product-item"><a class="product-thumb" href="shop-single.html"><img
                                                     src="img/product/<?php print $value['image'];?>" alt="Product"></a>
@@ -403,11 +385,13 @@ $osams = new Osams();
                                     </td>
                                     <td class="text-center text-lg text-medium"><?php print $value['cart_qty'];?></td>
                                     <td class="text-lg text-medium text-right">&#8369; <?php print $value['cart_total'];?></td>
-                                    <?php
+                                  
+                                    
+                    </tr>
+                    <?php
                                 }
                             }
                         ?>
-                    </tr>
                 </tbody>
               </table>
             </div>
@@ -421,27 +405,27 @@ $osams = new Osams();
                 <h3 class="widget-title">Payment Breakdown</h3>
                 <table class="table">
                     <?php
-                    $sqlStatement = "SELECT SUM(cart_total) AS 'Total', SUM(cart_total) * .12 AS 'Tax', SUM(cart_total) - SUM(cart_total) * .12 AS 'Subtotal' FROM cart_tbl JOIN customer_tbl ON cust_id = cart_cust_id JOIN product_tbl ON product_tbl.id = cart_prod_id WHERE cart_ispaid = 0";
-                    if($osams->select($sqlStatement) != 0) {
-                        foreach ($osams->select($sqlStatement) as $value) {
-                            ?>
-                            <tr>
-                                <td>Subtotal:</td>
-                                <td class="text-medium">&#8369; <?php print number_format($value['Subtotal'], 2) ?></td>
-                            </tr>
-                            <tr>
-                                <td>TAX</td>
-                                <td class="text-medium">&#8369; <?php print number_format($value['Tax'], 2) ?></td>
-                            </tr>
-                            <tr>
-                                <td>TOTAL</td>
-                                <td class="text-medium">&#8369; <?php print number_format($value['Total'], 2) ?></td>
-                            </tr>
+                        $sqlStatement = "SELECT SUM(cart_total) AS 'Total', SUM(cart_total) * .12 AS 'Tax', SUM(cart_total) - SUM(cart_total) * .12 AS 'Subtotal' FROM cart_tbl JOIN product_tbl ON product_tbl.id = cart_prod_id WHERE cart_ispaid = 0 AND cart_cust_id = '$custid'";
+                        if($osams->select($sqlStatement) != 0) {
+                            foreach ($osams->select($sqlStatement) as $value) {
+                                ?>
+                                <tr>
+                                    <td>Subtotal:</td>
+                                    <td class="text-medium">&#8369; <?php print number_format($value['Subtotal'], 2) ?></td>
+                                </tr>
+                                <tr>
+                                    <td>TAX</td>
+                                    <td class="text-medium">&#8369; <?php print number_format($value['Tax'], 2) ?></td>
+                                </tr>
+                                <tr>
+                                    <td>TOTAL</td>
+                                    <td class="text-medium">&#8369; <?php print number_format($value['Total'], 2) ?></td>
+                                </tr>
 
-                        <?php
+                                <?php
+                            }
                         }
-                    }
-                    ?>
+                        ?>
                 </table>
               </section>
             </aside>

@@ -1,3 +1,44 @@
+<?php
+include '../classes/connection.php';
+
+include '../classes/controller2.php';
+
+$cust_id = 1;
+$cart = new Controller2();
+$array = array("*");
+
+if(isset($_POST['update_cart'])){
+  $var = $_POST['qty'];
+  $var2 = $_POST['cart_id'];
+  $var3 = $_POST['price'];
+  foreach ($var as $key => $value) {
+
+    $qt = $value;
+    $cid = $var2[$key];
+    $price= $var3[$key];
+
+    $amount = $value * $price;
+    $updatecart = new Controller2();
+    $column = array("cart_qty", "cart_total");
+    $value = array($qt, $amount);
+    $updatecart->update("cart_tbl", $column, $value, $cid);
+  }
+}
+
+if(isset($_POST['remove'])){
+  $delcart = new Controller2();
+  $delID = $_POST['remove'];
+  $delcart->delete("cart_tbl", $delID);
+}
+
+if(isset($_POST['clear'])){
+  $ctid = $_POST['clear'];
+  $clearcart = new Controller2();
+  $query = "DELETE FROM cart_tbl WHERE cart_cust_id = ".$ctid." AND cart_ispaid = 0";
+  $clearcart->sqlquery($query);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   
@@ -34,6 +75,12 @@
       })(window,document,'script','dataLayer','GTM-T4DJFPZ');
       
     </script>
+
+    <script type="text/javascript">
+
+    function  quantity(q) {
+      document.getElementById("txt_guest_id").value = id;
+    }
     <!-- Modernizr-->
     <script src="js/modernizr.min.js"></script>
   </head>
@@ -69,90 +116,64 @@
               <tr>
                 <th>Product Name</th>
                 <th class="text-center">Quantity</th>
-                <th class="text-center">Subtotal</th>
-                <th class="text-center">Discount</th>
-                <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Clear Cart</a></th>
+                <th class="text-center">Unit Price</th>
+                <th class="text-center">Amount</th>
+                <form role="form" method="post">
+                <th class="text-center"><button type="submit" class="btn btn-sm btn-outline-danger" value="<?php echo$cust_id;?>" name="clear">Clear Cart</button></th>
+                </form>
               </tr>
             </thead>
             <tbody>
+              <?php
+                $id1 = "cart_cust_id = ".$cust_id." AND cart_ispaid = 0";
+                $result = $cart->read("cart_tbl", $array, $id1);
+                $count = count($result);
+                if($count != 0){
+                $total = 0;
+                  for($i=0; $i<=count($result)-1; $i++){
+                    $pid = $result[$i]["cart_prod_id"];
+                    $id2 = "prod_id = ".$pid;
+                    $product = new Controller2();
+                    $array2 = array("*");
+                    $result2 = $product->read("product_tbl", $array2, $id2);
+                    $total = $total + $result[$i]["cart_total"];
+
+              ?>
               <tr>
                 <td>
-                  <div class="product-item"><a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/01.jpg" alt="Product"></a>
+                  <form role="form" method="post">
+                  <div class="product-item"><a class="product-thumb" href="#"><img src="../backend/uploads/<?php echo $result2[$i]["image"];?>" alt="Product"></a>
                     <div class="product-info">
-                      <h4 class="product-title"><a href="shop-single.html">Unionbay Park</a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
+                      <h4 class="product-title"><a href="#"><?php echo $result2[$i]["prod_name"];?></a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
                     </div>
                   </div>
                 </td>
                 <td class="text-center">
                   <div class="count-input">
-                    <select class="form-control">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </select>
+                    <input class="form-control" type="number" value="<?php echo $result[$i]["cart_qty"];?>" min="1" name="qty[]">
+                    <input type="hidden" value="<?php echo $result[$i]["id"];?>" name="cart_id[]">
+                    <input type="hidden" value="<?php echo $result2[$i]["prod_price"];?>" name="price[]">
                   </div>
                 </td>
-                <td class="text-center text-lg text-medium">$43.90</td>
-                <td class="text-center text-lg text-medium">$18.00</td>
-                <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="Remove item"><i class="icon-cross"></i></a></td>
+                <td class="text-center text-lg text-medium">₱<?php echo number_format($result2[$i]["prod_price"], 2);?></td>
+                <td class="text-center text-lg text-medium">₱<?php echo number_format($result[$i]["cart_total"], 2);?></td>
+                <td class="text-center"><button type="submit" class="btn btn-sm btn-outline-danger" name="remove" value="<?php echo $result[$i]["id"];?>" data-toggle="tooltip" title="Remove item"><i class="icon-cross"></i></a></td>
               </tr>
-              <tr>
-                <td>
-                  <div class="product-item"><a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/02.jpg" alt="Product"></a>
-                    <div class="product-info">
-                      <h4 class="product-title"><a href="shop-single.html">Daily Fabric Cap</a></h4><span><em>Size:</em> XL</span><span><em>Color:</em> Black</span>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <div class="count-input">
-                    <select class="form-control">
-                      <option>1</option>
-                      <option selected>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </select>
-                  </div>
-                </td>
-                <td class="text-center text-lg text-medium">$24.89</td>
-                <td class="text-center">&mdash;</td>
-                <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="Remove item"><i class="icon-cross"></i></a></td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="product-item"><a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/03.jpg" alt="Product"></a>
-                    <div class="product-info">
-                      <h4 class="product-title"><a href="shop-single.html">Cole Haan Crossbody</a></h4><span><em>Size:</em> -</span><span><em>Color:</em> Turquoise</span>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <div class="count-input">
-                    <select class="form-control">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </select>
-                  </div>
-                </td>
-                <td class="text-center text-lg text-medium">$200.00</td>
-                <td class="text-center">&mdash;</td>
-                <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="Remove item"><i class="icon-cross"></i></a></td>
-              </tr>
+              <?php
+                }
+                }
+              ?>
             </tbody>
           </table>
         </div>
         <div class="shopping-cart-footer">
-          <div class="column text-lg">Subtotal: <span class="text-medium">$289.68</span></div>
+          <div class="column text-lg">Subtotal: <span class="text-medium">₱<?php echo number_format($total, 2);?></span></div>
         </div>
         <div class="shopping-cart-footer">
           <div class="column"><a class="btn btn-outline-secondary" href="shop-grid-ls.html"><i class="icon-arrow-left"></i>&nbsp;Back to Shopping</a></div>
-          <div class="column"><a class="btn btn-primary" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Your cart" data-toast-message="is updated successfully!">Update Cart</a><a class="btn btn-success" href="checkout-address.html">Checkout</a></div>
+          <div class="column"><button type="submit" class="btn btn-primary" name="update_cart">Update Cart</button>
+          </form>
+            <a class="btn btn-success" href="checkout-payment.php">Checkout</a></div>
         </div>
         
         </div>

@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+session_start();	
 class User extends Database
 {	
 	private $username;
@@ -89,11 +89,13 @@ class User extends Database
 			{
 				header("Location: /teamsf_osams/backend/index.php");
 				$_SESSION['username'] = $this->myArray[0]['user_email'];
+				$_SESSION['id'] = $this->myArray[0]['accnt_id'];
 			}
 			else
 			{
 				header("Location: /teamsf_osams/frontend/index.php");
 				$_SESSION['username'] = $this->myArray[0]['user_email'];
+				$_SESSION['cust_id'] = $this->myArray[0]['accnt_id'];
 			}
 		} else {
 			# code...
