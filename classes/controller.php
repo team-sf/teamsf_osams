@@ -38,7 +38,7 @@ class Controller extends Database
 		$query = "SELECT ";
 		$ctr1 = count($columns);
 
-		if($id == 0)
+		if($id == "0")
 		{
 			for($i=0; $i<=$ctr1-1; $i++)
 			{
@@ -98,7 +98,7 @@ class Controller extends Database
 			{
 				$query .= $columns[$i]." = "."'".$values[$i]."'".' WHERE id= '.$id;
 			}
-		}
+		}	
 		return $this->connect()->query($query);
 	}
 
