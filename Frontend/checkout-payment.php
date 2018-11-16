@@ -363,7 +363,7 @@ $custid = $_SESSION['cust_id'];
             <div class="row">
                 <div class="col-md-4">
                     <img src="img/unionB_btn.png">
-                    <button type="submit" class="btn btn-info btn-sm text-center" style="margin-left: 70px;"  onclick="location.href = 'https://api-uat.unionbankph.com/partners/sb/customers/v1/oauth2/authorize?response_type=code&client_id=46e33463-8184-432e-aaa4-062d7a7a9c49&redirect_uri=http://172.16.123.85/otop/redirect.php&scope=payments&type=linking&partnerId=01bbb51e-1e6c-4bd4-af9c-450957522aac'"><i class="fa fa-check-square"></i> PAY NOW</button>
+                    <button type="submit" class="btn btn-info btn-sm text-center" style="margin-left: 70px;"  onclick="location.href = 'https://api-uat.unionbankph.com/partners/sb/customers/v1/oauth2/authorize?response_type=code&client_id=46e33463-8184-432e-aaa4-062d7a7a9c49&redirect_uri=http://localhost/teamsf_osams/Frontend/redirect.php&scope=payments&type=linking&partnerId=01bbb51e-1e6c-4bd4-af9c-450957522aac'"><i class="fa fa-check-square"></i> PAY NOW</button>
                 </div>
                 <div class="col-md-4">
                     <img src="img/paypal_btn.png">
