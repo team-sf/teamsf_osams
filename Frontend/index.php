@@ -58,12 +58,12 @@ $osams = new Osams();
             <div class="container padding-top-3x">
               <div class="row justify-content-center align-items-center">
                 <div class="col-lg-5 col-md-6 padding-bottom-2x text-md-left text-center">
-                  <div class="from-bottom"><img class="d-inline-block w-150 mb-4" src="img/hero-slider/logo02.png" alt="Puma">
-                    <div class="h2 text-body text-normal mb-2 pt-1">Puma Backpacks Collection</div>
-                    <div class="h2 text-body text-normal mb-4 pb-1">starting at <span class="text-bold">$37.99</span></div>
-                  </div><a class="btn btn-primary scale-up delay-1" href="shop-grid-ls.php">View Offers</a>
+                  <div class="from-bottom"><img class="d-inline-block w-150 mb-4" src="img/hero-slider/2.png" alt="Puma">
+                    <div class="h2 text-body text-normal mb-2 pt-1">Bracelets Collection</div>
+                    <div class="h5 text-body text-normal mb-4 pb-1">from San Fernando, Pampanga</div>
+                  </div>
                 </div>
-                <div class="col-md-6 padding-bottom-2x mb-3"><img class="d-block mx-auto" src="img/hero-slider/02.png" alt="Puma Backpack"></div>
+                <div class="col-md-6 padding-bottom-2x mb-3"><img class="d-block mx-auto" src="img/hero-slider/2.png" alt="Puma Backpack"></div>
               </div>
             </div>
           </div>
@@ -71,12 +71,12 @@ $osams = new Osams();
             <div class="container padding-top-3x">
               <div class="row justify-content-center align-items-center">
                 <div class="col-lg-5 col-md-6 padding-bottom-2x text-md-left text-center">
-                  <div class="from-bottom"><img class="d-inline-block w-200 mb-4" src="img/hero-slider/logo01.png" alt="Converse">
-                    <div class="h2 text-body text-normal mb-2 pt-1">Chuck Taylor All Star II</div>
-                    <div class="h2 text-body text-normal mb-4 pb-1">for only <span class="text-bold">$59.99</span></div>
-                  </div><a class="btn btn-primary scale-up delay-1" href="shop-single.html">Shop Now</a>
+                  <div class="from-bottom"><img class="d-inline-block w-200 mb-4" src="img/hero-slider/6.png" alt="Converse">
+                    <div class="h2 text-body text-normal mb-2 pt-1">Bayong Collection</div>
+                    <div class="h5 text-body text-normal mb-4 pb-1">from Bacarra, Ilocos Norte</div>
+                  </div>
                 </div>
-                <div class="col-md-6 padding-bottom-2x mb-3"><img class="d-block mx-auto" src="img/hero-slider/01.png" alt="Chuck Taylor All Star II"></div>
+                <div class="col-md-6 padding-bottom-2x mb-3"><img class="d-block mx-auto" src="img/hero-slider/6.png" alt="Chuck Taylor All Star II"></div>
               </div>
             </div>
           </div>
@@ -84,12 +84,25 @@ $osams = new Osams();
             <div class="container padding-top-3x">
               <div class="row justify-content-center align-items-center">
                 <div class="col-lg-5 col-md-6 padding-bottom-2x text-md-left text-center">
-                  <div class="from-bottom"><img class="d-inline-block mb-4" src="img/hero-slider/logo03.png" style="width: 125px;" alt="Motorola">
-                    <div class="h2 text-body text-normal mb-2 pt-1">Smart Watch Moto 360 2nd</div>
-                    <div class="h2 text-body text-normal mb-4 pb-1">for only <span class="text-bold">$299.99</span></div>
-                  </div><a class="btn btn-primary scale-up delay-1" href="shop-single.html">Shop Now</a>
+                  <div class="from-bottom"><img class="d-inline-block mb-4" src="img/hero-slider/9.png" style="width: 125px;" alt="Motorola">
+                    <div class="h2 text-body text-normal mb-2 pt-1">Tumba-Tumba</div>
+                    <div class="h5 text-body text-normal mb-4 pb-1">from Paete, Laguna</div>
+                  </div>
                 </div>
-                <div class="col-md-6 padding-bottom-2x mb-3"><img class="d-block mx-auto" src="img/hero-slider/03.png" alt="Moto 360"></div>
+                <div class="col-md-6 padding-bottom-2x mb-3"><img class="d-block mx-auto" src="img/hero-slider/9.png" alt="Moto 360"></div>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="container padding-top-3x">
+              <div class="row justify-content-center align-items-center">
+                <div class="col-lg-5 col-md-6 padding-bottom-2x text-md-left text-center">
+                  <div class="from-bottom"><img class="d-inline-block mb-4" src="img/hero-slider/8.png" style="width: 125px;" alt="Motorola">
+                    <div class="h2 text-body text-normal mb-2 pt-1">Luklukan</div>
+                    <div class="h5 text-body text-normal mb-4 pb-1">form Badoc, Ilocos Norte</div>
+                  </div>
+                </div>
+                <div class="col-md-6 padding-bottom-2x mb-3"><img class="d-block mx-auto" src="img/hero-slider/8.png" alt="Moto 360"></div>
               </div>
             </div>
           </div>
@@ -112,10 +125,7 @@ $osams = new Osams();
               <a class="product-thumb" href="shop-single.html"><img src="../backend/uploads/<?php print $val["image"];?>" alt="Product" style="width: 100%;height: 200px;"></a>
               <h3 class="product-title"><a href="shop-single.html"><?php print $val["prod_name"];?></a></h3>
               <h4 class="product-price">&#8369; <?php print number_format($val["prod_price"], 2); ?></h4>
-              <div class="product-buttons">
               
-                <button class="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
             </div>
           </div>
           <?php

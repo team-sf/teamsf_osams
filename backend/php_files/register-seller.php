@@ -14,7 +14,7 @@ $stud = new Controller();
 $activate =  new Misc();
 $user = new User();
 
-session_start();
+// session_start();
 
 	if(isset($_POST["submit"])) {
 		$city = $_POST['city'];

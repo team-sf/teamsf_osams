@@ -3,9 +3,34 @@ include '../classes/connection.php';
 
 include '../classes/controller2.php';
 
-$cust_id = 1;
+include 'classes/DatabaseHelper.php';
+include 'classes/Osams.php';
+
+$osams = new Osams();
+@session_start();
+
+$custid = $_SESSION["cust_id"];
 $cart = new Controller2();
 $array = array("*");
+$total = null;
+
+
+
+if (isset($_POST['update_cart1'])) {
+  $cart = $_POST["cart_id"];
+  $price = $_POST["price"];
+  $qty = $_POST["qty"];
+
+  foreach ($qty as $key => $value) {
+    $a = $price[$key];
+    $cartID = $cart[$key];
+    $newAmount = floatval($a) * floatval($value);
+
+    print $updateCart = "UPDATE cart_tbl set cart_qty = '$value', cart_total = '$newAmount' WHERE id = '$cartID'";
+    $osams->updateCart($updateCart);
+
+  }  
+}
 
 if(isset($_POST['update_cart'])){
   $var = $_POST['qty'];
@@ -26,9 +51,12 @@ if(isset($_POST['update_cart'])){
 }
 
 if(isset($_POST['remove'])){
-  $delcart = new Controller2();
-  $delID = $_POST['remove'];
-  $delcart->delete("cart_tbl", $delID);
+  $cartid = $_POST['remove'];
+  $removeItem = "DELETE FROM cart_tbl WHERE id = '$cartid'";
+  $osams->updateCart($removeItem);
+  // $delcart = new Controller2();
+  // $delID = $_POST['remove'];
+  // $delcart->delete("cart_tbl", $delID);
 }
 
 if(isset($_POST['clear'])){
@@ -37,7 +65,10 @@ if(isset($_POST['clear'])){
   $query = "DELETE FROM cart_tbl WHERE cart_cust_id = ".$ctid." AND cart_ispaid = 0";
   $clearcart->sqlquery($query);
 }
-
+$sqlStatement = "SELECT SUM(cart_total) AS 'total' FROM cart_tbl JOIN product_tbl ON cart_prod_id=product_tbl.id WHERE cart_cust_id='$custid' AND cart_ispaid=0";
+                foreach($osams->select($sqlStatement) AS $value){
+                    $total = $value['total'];
+                  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,43 +156,34 @@ if(isset($_POST['clear'])){
             </thead>
             <tbody>
               <?php
-                $id1 = "cart_cust_id = ".$cust_id." AND cart_ispaid = 0";
-                $result = $cart->read("cart_tbl", $array, $id1);
-                $count = count($result);
-                if($count != 0){
-                $total = 0;
-                  for($i=0; $i<=count($result)-1; $i++){
-                    $pid = $result[$i]["cart_prod_id"];
-                    $id2 = "prod_id = ".$pid;
-                    $product = new Controller2();
-                    $array2 = array("*");
-                    $result2 = $product->read("product_tbl", $array2, $id2);
-                    $total = $total + $result[$i]["cart_total"];
+                $sqlStatement = "SELECT product_tbl.image AS 'image', product_tbl.prod_name as 'prod_name', cart_qty as 'cart_qty', cart_tbl.id as 'id', product_tbl.prod_price as 'prod_price', cart_tbl.cart_total as 'cart_total' FROM cart_tbl JOIN product_tbl ON cart_prod_id=product_tbl.id WHERE cart_cust_id='$custid' AND cart_ispaid=0";
+                if ($osams->select($sqlStatement) != 0) {
+                foreach($osams->select($sqlStatement) AS $value){
 
               ?>
               <tr>
                 <td>
                   <form role="form" method="post">
-                  <div class="product-item"><a class="product-thumb" href="#"><img src="../backend/uploads/<?php echo $result2[$i]["image"];?>" alt="Product"></a>
+                  <div class="product-item"><a class="product-thumb" href="#"><img src="../backend/uploads/<?php echo $value["image"];?>" alt="Product"></a>
                     <div class="product-info">
-                      <h4 class="product-title"><a href="#"><?php echo $result2[$i]["prod_name"];?></a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
+                      <h4 class="product-title"><a href="#"><?php echo $value["prod_name"];?></a></h4>
                     </div>
                   </div>
                 </td>
                 <td class="text-center">
                   <div class="count-input">
-                    <input class="form-control" type="number" value="<?php echo $result[$i]["cart_qty"];?>" min="1" name="qty[]">
-                    <input type="hidden" value="<?php echo $result[$i]["id"];?>" name="cart_id[]">
-                    <input type="hidden" value="<?php echo $result2[$i]["prod_price"];?>" name="price[]">
+                    <input class="form-control" type="number" value="<?php echo $value["cart_qty"];?>" name="qty[]">
+                    <input type="hidden" value="<?php echo $value["id"];?>" name="cart_id[]">
+                    <input type="hidden" value="<?php echo $value["prod_price"];?>" name="price[]">
                   </div>
                 </td>
-                <td class="text-center text-lg text-medium">₱<?php echo number_format($result2[$i]["prod_price"], 2);?></td>
-                <td class="text-center text-lg text-medium">₱<?php echo number_format($result[$i]["cart_total"], 2);?></td>
-                <td class="text-center"><button type="submit" class="btn btn-sm btn-outline-danger" name="remove" value="<?php echo $result[$i]["id"];?>" data-toggle="tooltip" title="Remove item"><i class="icon-cross"></i></a></td>
+                <td class="text-center text-lg text-medium">₱<?php echo number_format($value["prod_price"], 2);?></td>
+                <td class="text-center text-lg text-medium">₱<?php echo number_format($value["cart_total"], 2);?></td>
+                <td class="text-center"><button type="submit" class="btn btn-sm btn-outline-danger" name="remove" value="<?php echo $value["id"];?>" data-toggle="tooltip" title="Remove item"><i class="icon-cross"></i></a></td>
               </tr>
               <?php
                 }
-                }
+              }
               ?>
             </tbody>
           </table>
@@ -171,7 +193,7 @@ if(isset($_POST['clear'])){
         </div>
         <div class="shopping-cart-footer">
           <div class="column"><a class="btn btn-outline-secondary" href="shop-grid-ls.php"><i class="icon-arrow-left"></i>&nbsp;Back to Shopping</a></div>
-          <div class="column"><button type="submit" class="btn btn-primary" name="update_cart">Update Cart</button>
+          <div class="column"><button type="submit" class="btn btn-primary" name="update_cart1">Update Cart</button>
           </form>
             <a class="btn btn-success" href="checkout-payment.php">Checkout</a></div>
         </div>

@@ -1,3 +1,11 @@
+<?php
+@session_start();
+include 'classes/DatabaseHelper.php';
+include 'classes/Osams.php';
+
+$osams = new Osams();
+$custid = $_SESSION['cust_id'];
+?>
 <!DOCTYPE html>
 <html lang="en">
   
@@ -378,11 +386,21 @@
                   </tr>
                 </thead>
                 <tbody>
+                    <?php
+                      $sqlStatement = "SELECT * FROM transaction_tbl WHERE trans_cust_id = '$custid'";
+                      if ($osams->select($sqlStatement) != 0) {
+                       
+                      foreach ($osams->select($sqlStatement) AS $value) {
+                    ?>
                     <tr>
-                        <td class="text-left text-lg text-medium"><a href="order-details.php?code=1234354">1234354</a></td>
-                        <td class="text-center text-lg text-medium"><?php print date('d-M-Y', strtotime('2018-12-12'));?></td>
-                        <td class="text-lg text-medium text-right">&#8369; 100</td>
+                        <td class="text-left text-lg text-medium"><a href="order-details.php?code=<?php print $value['trans_cart_code'];?>"><?php print $value['trans_cart_code'];?></a></td>
+                        <td class="text-center text-lg text-medium"><?php print date('d-M-Y', strtotime($value['trans_date']))?></td>
+                        <td class="text-lg text-medium text-right">&#8369; <?php print number_format($value['trans_amount'], 2)?></td>
                     </tr>
+                    <?php
+                      }
+                    }
+                    ?>
                 </tbody>
               </table>
             </div>

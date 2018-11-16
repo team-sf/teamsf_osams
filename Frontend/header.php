@@ -58,6 +58,7 @@
           </li>
           
           <li><a href="logout.php"> <i class="icon-head"></i>Logout</a></li>
+          <li><a href="history.php"> <i class="icon-head"></i>View History</a></li>
         </ul>
       </div>
   <?php    

@@ -24,7 +24,7 @@ $column = array("cart_cust_id", "cart_prod_id", "cart_qty", "cart_total", "cart_
 $value = array($cust_id, $pid, 1, $pprice, $date, 0);
 $add->create("cart_tbl", $column, $value);
 
-header('location: cart.php');
+header('location: cart1.php');
 }
 
 ?>

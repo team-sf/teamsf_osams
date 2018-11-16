@@ -354,7 +354,7 @@ $custid = $_SESSION['cust_id'];
         <div class="row">
           <!-- Checkout Adress-->
           <div class="col-xl-9 col-lg-8">
-            <div class="checkout-steps"><a class="active" href="checkout-review.php">4. Summary</a><a class="completed" href="checkout-payment.php"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>3. Payment</a><a class="completed" href="checkout-shipping.php"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>2. Shipping</a><a class="completed" href="checkout-address.php"><span class="step-indicator icon-circle-check"></span><span class="angle"></span>1. Address</a></div>
+          
             <h4>Review Your Order</h4>
             <hr class="padding-bottom-1x">
             <div class="table-responsive shopping-cart">

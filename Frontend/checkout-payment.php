@@ -369,12 +369,24 @@ $custid = $_SESSION['cust_id'];
                     <img src="img/paypal_btn.png">
                     <div>
                         <form class="form-horizontal" name="_xclick" action="https://www.sandbox.paypal.com/webscr" role="form" method="post">
-                            <input type="hidden" name="cmd" value="_xclick">
+                            <input type="hidden" name="cmd" value="_cart">
+                            <input type="hidden" name="upload" value="1">
                             <input type="hidden" name="business" value="m4kz.baguio.24@gmail.com">
                             <input type="hidden" name="currency_code" value="PHP">
-                            <input type="hidden" name="item_name" value="">
-                            <input type="hidden" name="return" value="">
-                            <input type="hidden" name="amount" value="500">
+                            <?php
+                              $x = 1;
+                              $sqlCart = "SELECT * FROM cart_tbl JOIN product_tbl ON cart_prod_id=product_tbl.id WHERE cart_cust_id='$custid' AND cart_ispaid=0";
+                              foreach ($osams->select($sqlCart) AS $value) {
+                            ?>
+                            <input type="hidden" name="item_name_<?php print $x; ?>" value="<?php print $value["prod_name"]; ?>">
+                            <input type="hidden" name="amount_<?php print $x; ?>" value="<?php print $value["cart_total"]; ?>">
+                            <input type="hidden" name="quantity_<?php print $x; ?>" value="<?php print $value["cart_qty"];?>">
+                            <?php
+                                $x++;
+                              }
+                            ?>
+                            <input type="hidden" name="return" value="http://localhost/teamsf_osams/frontend/checkout-review.php">
+                            <input type="hidden" name="cancel_return" value="http://localhost/samplepaypal/paypal.php">
                             <button type="submit" class="btn btn-info btn-sm text-center" style="margin-left: 70px;"><i class="fa fa-check-square"></i> pay now</button>
                             <div class="clearfix"></div>
                         </form>

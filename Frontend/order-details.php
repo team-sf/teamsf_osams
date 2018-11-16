@@ -1,4 +1,5 @@
 <?php
+@session_start();
 include 'classes/DatabaseHelper.php';
 include 'classes/Osams.php';
 $osams = new Osams();
